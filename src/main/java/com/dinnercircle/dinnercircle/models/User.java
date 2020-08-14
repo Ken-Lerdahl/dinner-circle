@@ -3,7 +3,9 @@ package com.dinnercircle.dinnercircle.models;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class User  extends AbstractEntity{
@@ -14,17 +16,49 @@ public class User  extends AbstractEntity{
     @NotNull
     private String pwHash;
 
+    @NotNull
+    private String email;
+
+    @NotNull
+    private String phoneNum;
+
+    @NotNull
+    private String firstName;
+
+    @NotNull
+    private String lastName;
+
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public User() {}
 
-    public User(String username, String password) {
+    public User(String username, String password, String email, String phoneNum, String firstName, String lastName) {
         this.username = username;
         this.pwHash = encoder.encode(password);
+        this.email = email;
+        this.phoneNum = phoneNum;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public String getUsername() {
         return username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     public boolean isMatchingPassword(String password) {

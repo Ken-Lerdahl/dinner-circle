@@ -62,10 +62,24 @@ public class AuthenticationController {
                 return "register";
             }
 
-            User existingUser = userRepository.findByUsername(registerFormDTO.getUsername());
+            User existingUsername = userRepository.findByUsername(registerFormDTO.getUsername());
+            User existingEmail = userRepository.findByEmail(registerFormDTO.getEmail());
+            User existingPhoneNum = userRepository.findByPhoneNum(registerFormDTO.getPhoneNum());
 
-            if (existingUser != null) {
+            if (existingUsername != null) {
                 errors.rejectValue("username", "username.alreadyexists", "A user with that username already exists");
+                model.addAttribute("title", "Register");
+                return "register";
+            }
+
+            if (existingEmail != null) {
+                errors.rejectValue("email", "email.alreadyexists", "A user with that email address already exists");
+                model.addAttribute("title", "Register");
+                return "register";
+            }
+
+            if (existingPhoneNum != null) {
+                errors.rejectValue("phoneNum", "phoneNum.alreadyexists", "A user with that phone number already exists");
                 model.addAttribute("title", "Register");
                 return "register";
             }
@@ -78,7 +92,8 @@ public class AuthenticationController {
                 return "register";
             }
 
-            User newUser = new User(registerFormDTO.getUsername(), registerFormDTO.getPassword());
+            User newUser = new User(registerFormDTO.getUsername(), registerFormDTO.getPassword(), registerFormDTO.getEmail(), registerFormDTO.getPhoneNum(),
+                                    registerFormDTO.getFirstName(), registerFormDTO.getLastName());
             userRepository.save(newUser);
             setUserInSession(request.getSession(), newUser);
 

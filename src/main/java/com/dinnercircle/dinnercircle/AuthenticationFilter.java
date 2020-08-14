@@ -51,7 +51,7 @@ public class AuthenticationFilter extends HandlerInterceptorAdapter {
             return true;
         }
 
-        response.sendRedirect("index");
+        response.sendRedirect("/login");
         return false;
     }
 
