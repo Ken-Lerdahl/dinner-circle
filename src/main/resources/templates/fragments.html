@@ -15,11 +15,12 @@
 <div th:fragment="page-header" class ="navbar navbar-expand navbar-dark bg-dark">
     <div class="container">
         <div class="navbar-header">
-            <a th:href="@{/}" class="navbar-brand">dinnerCircle</a>
+            <a th:href="@{/home}" class="navbar-brand">dinnerCircle</a>
         </div>
         <div class="collapse navbar-collapse" id="navBarDropdown">
             <ul class="nav navbar-nav">
                 <li><a th:href="@{/mealplan}">Meal Plan</a></li>
+                <li style="padding-left:10px;"><a th:href="@{/logout}">Logout</a></li>
             </ul>
         </div>
     </div>
