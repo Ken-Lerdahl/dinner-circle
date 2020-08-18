@@ -107,6 +107,8 @@ CONTENTS
 
 -------------
 
+	- Dinner Circle is protected under a GNU GPL v3 license (https://github.com/Ken-Lerdahl/dinner-circle.git/LICENSE.txt)
+
 	- Dinner Circle was created and is currently fully maintained by Ken Lerdahl (ken.lerdahl@gmail.com).
 
 -------------

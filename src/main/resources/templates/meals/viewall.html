@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+</head>
+<body>
+
+<div th:replace="fragments :: page-header"></div>
+
+<div class="container body-content">
+    <h2>All Meals</h2>
+    <div>
+        <p th:unless="${meals} and ${meals.size()}">Add some meals!</p>
+    </div>
+    <ul>
+        <li th:each="meal : ${meals}">
+            <a th:href="@{'/meals/view/' + ${meal.id}}" th:text="${meal.name}"></a>
+        </li>
+    </ul>
+    <a th:href="@{'/meals/add'}">Add A New Meal</a>
+
+</div>
