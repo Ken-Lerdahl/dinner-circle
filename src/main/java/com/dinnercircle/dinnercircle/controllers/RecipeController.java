@@ -6,12 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("recipes")
@@ -24,7 +22,7 @@ public class RecipeController {
     public String displayRecipes(Model model) {
         model.addAttribute("title", "All Recipes");
         model.addAttribute("recipes", recipeRepository.findAll());
-        return "recipes/viewall";
+        return "recipes/index";
     }
 
     @GetMapping("add")
@@ -45,6 +43,24 @@ public class RecipeController {
 
         recipeRepository.save(newRecipe);
         return "recipes/index";
+
+        // FLESH OUT ADD TEMPLATE AND CONTROLLER METHODS
+        // NEED TO PASS INGREDIENTS LIST & UNITS INTO VIEW, THEN
+        // ADD INDREDIENTS TO DATABASE
+        // ALSO, GET STRING FOR STEPS TO MAKE
+    }
+
+    @GetMapping("view/{recipeId}")
+    public String displayViewRecipe(Model model, @PathVariable int recipeId) {
+
+        Optional<Recipe> optRecipe = recipeRepository.findById(recipeId);
+        if (optRecipe.isPresent()) {
+            Recipe recipe = (Recipe) optRecipe.get();
+            model.addAttribute("recipe", recipe);
+            return "recipes/view";
+        } else {
+            return "redirect:../";
+        }
     }
 
 }

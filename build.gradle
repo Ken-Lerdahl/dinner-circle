@@ -22,7 +22,9 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	implementation 'org.springframework.security:spring-security-crypto'
 	implementation 'javax.measure:unit-api:2.0'
+	implementation 'org.javatuples:javatuples:1.2'
 	compile 'com.spoonacular:java-client:1.0'
+	compile 'org.springframework.webflow:spring-webflow:2.5.1.RELEASE'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}

@@ -23,7 +23,7 @@ public class IngredientController {
     @GetMapping
     public String displayIngredients(Model model) {
         model.addAttribute("title", "All Ingredients");
-        model.addAttribute("skills", ingredientRepository.findAll());
+        model.addAttribute("ingredients", ingredientRepository.findAll());
         return "ingredients/index";
     }
 
@@ -44,6 +44,6 @@ public class IngredientController {
         }
 
         ingredientRepository.save(newIngredient);
-        return "ingredients/index";
+        return "redirect:";
     }
 }
