@@ -163,7 +163,7 @@ public class RecipeController {
     @GetMapping("view/{recipeId}")
     public String displayViewRecipe(Model model, @PathVariable int recipeId) {
 
-        List<IngredientListItem> ingListItemObjs = (List<IngredientListItem>) ingredientListItemRepostiory.findById()
+
         Optional<Recipe> optRecipe = recipeRepository.findById(recipeId);
         if (optRecipe.isPresent()) {
             Recipe recipe = (Recipe) optRecipe.get();
