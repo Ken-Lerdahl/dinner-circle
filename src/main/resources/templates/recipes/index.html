@@ -7,9 +7,12 @@
 <div th:replace="fragments :: page-header"></div>
 
 <div class="container body-content">
-    <h2>All Meals</h2>
+    <h2>All Recipes</h2>
     <div>
         <p th:unless="${recipes} and ${recipes.size()}">Add some recipes!</p>
+    </div>
+    <div>
+        <a th:href="@{'/recipes/add'}">Add A New Recipe</a>
     </div>
     <ul>
         <li th:each="recipe : ${recipes}">

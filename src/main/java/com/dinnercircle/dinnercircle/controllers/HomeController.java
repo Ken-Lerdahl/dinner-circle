@@ -9,15 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 
     @RequestMapping("home")
-    public String index() {
+    public String displayHome() {
         return "/home";
     }
 
+    @RequestMapping("")
+    public String displayIndex() {
+        return "/index";
+    }
     @GetMapping("mealplan")
     public String displayMealplan() {
         return "mealplan";
     }
-
-
 
 }

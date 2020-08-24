@@ -60,7 +60,7 @@ public class RecipeController {
 
         recipeRepository.save(newRecipe);
         int recipeId = newRecipe.getId();
-        return "recipes/addingredients/" + recipeId;
+        return "redirect:addingredients/" + recipeId;
     }
 
     @GetMapping("addingredients/{recipeId}")
@@ -80,11 +80,10 @@ public class RecipeController {
         }
     }
 
-    @PostMapping("addingredients/{recipeId}")
+    @RequestMapping(value="addingredients/{recipeId}", params="next", method=RequestMethod.POST)
     public String processAddIngredients(@ModelAttribute @Valid IngredientListItem newIngredientListItem,
                                         Errors errors, Model model, @PathVariable int recipeId,
-                                        @RequestParam int ingredientOnListItem,
-                                        @RequestParam String recipeSteps) {
+                                        @RequestParam int ingredientOnListItem) {
 
         Optional<Recipe> optRecipe = recipeRepository.findById(recipeId);
 //        if (optRecipe.isPresent()) {
@@ -94,27 +93,82 @@ public class RecipeController {
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Ingredients");
 
-            return "recipes/addingredients/{recipeId}";
+            return "recipes/addingredients/" + recipeId;
         }
         Optional<Ingredient> optionalIngredient = ingredientRepository.findById(ingredientOnListItem);
             if(optionalIngredient.isPresent()) {
                 Ingredient ingredientToSave = (Ingredient) optionalIngredient.get();
                 newIngredientListItem.setIngredient(ingredientToSave);
                 newIngredientListItem.setRecipe(recipe);
-                recipe.setRecipeSteps(recipeSteps);
+
                 ingredientListItemRepostiory.save(newIngredientListItem);
                 recipeRepository.save(recipe);
             }
+        return "redirect:../addsteps/" + recipeId;
+    }
+
+    @RequestMapping(value="addingredients/{recipeId}", params="add", method=RequestMethod.POST)
+    public String processMoreAddIngredients(@ModelAttribute @Valid IngredientListItem newIngredientListItem,
+                                        Errors errors, Model model, @PathVariable int recipeId,
+                                        @RequestParam int ingredientOnListItem) {
+
+        Optional<Recipe> optRecipe = recipeRepository.findById(recipeId);
+//        if (optRecipe.isPresent()) {
+        Recipe recipe = (Recipe) optRecipe.get();
+        model.addAttribute("recipe", recipe);
+//        }
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Add Ingredients");
+
+            return "recipes/addingredients/" + recipeId;
+        }
+        Optional<Ingredient> optionalIngredient = ingredientRepository.findById(ingredientOnListItem);
+        if(optionalIngredient.isPresent()) {
+            Ingredient ingredientToSave = (Ingredient) optionalIngredient.get();
+            newIngredientListItem.setIngredient(ingredientToSave);
+            newIngredientListItem.setRecipe(recipe);
+
+            ingredientListItemRepostiory.save(newIngredientListItem);
+            recipeRepository.save(recipe);
+        }
+        return "redirect:" + recipeId;
+    }
+
+    @GetMapping("addsteps/{recipeId}")
+    public String displayAddSteps(Model model, @PathVariable int recipeId) {
+        Optional<Recipe> optRecipe = recipeRepository.findById(recipeId);
+        if (optRecipe.isPresent()) {
+            Recipe recipe = (Recipe) optRecipe.get();
+            model.addAttribute("title", "Add Ingredients");
+            model.addAttribute("recipe", recipe);
+            return "recipes/addsteps";
+        } else {
+            return "redirect:../";
+        }
+    }
+
+    @PostMapping("addsteps/{recipeId}")
+    public String processAddSteps(Model model, @PathVariable int recipeId, @RequestParam String recipeSteps) {
+
+        Optional<Recipe> optRecipe = recipeRepository.findById(recipeId);
+        Recipe recipe = (Recipe) optRecipe.get();
+        model.addAttribute("recipe", recipe);
+        recipe.setRecipeSteps(recipeSteps);
+        recipeRepository.save(recipe);
         return "redirect:../";
     }
+
+
 
     @GetMapping("view/{recipeId}")
     public String displayViewRecipe(Model model, @PathVariable int recipeId) {
 
+        List<IngredientListItem> ingListItemObjs = (List<IngredientListItem>) ingredientListItemRepostiory.findById()
         Optional<Recipe> optRecipe = recipeRepository.findById(recipeId);
         if (optRecipe.isPresent()) {
             Recipe recipe = (Recipe) optRecipe.get();
             model.addAttribute("recipe", recipe);
+
             return "recipes/view";
         } else {
             return "redirect:../";

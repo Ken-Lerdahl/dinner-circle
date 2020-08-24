@@ -1,5 +1,7 @@
 package com.dinnercircle.dinnercircle.models;
 
+import com.dinnercircle.dinnercircle.models.data.IngredientListItemRepostiory;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,4 +60,8 @@ public class IngredientListItem extends AbstractEntity{
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
     }
+
+
+
+
 }
