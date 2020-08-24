@@ -1,7 +1,6 @@
 package com.dinnercircle.dinnercircle.models;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +10,8 @@ public class Ingredient extends AbstractEntity{
 
     private String name;
 
-    @ManyToMany(mappedBy = "ingredients")
-    private List<Recipe> recipes = new ArrayList<>();
+    @OneToMany(mappedBy = "ingredientOnListItem")
+    private List<IngredientListItem> ingredientListItems = new ArrayList<>();
 
     public Ingredient() {};
 
@@ -24,7 +23,15 @@ public class Ingredient extends AbstractEntity{
         this.name = name;
     }
 
-    public List<Recipe> getRecipes() {
-        return recipes;
+    public List<IngredientListItem> getIngredientListItems() {
+        return ingredientListItems;
+    }
+
+    public void setIngredientListItems(List<IngredientListItem> ingredientListItems) {
+        this.ingredientListItems = ingredientListItems;
+    }
+
+    public void addIngredientListItems(IngredientListItem ingredientListItem) {
+        ingredientListItems.add(ingredientListItem);
     }
 }
