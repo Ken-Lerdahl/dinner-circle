@@ -22,8 +22,12 @@ public class WebApplicationConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**")
-                .addResourceLocations("classpath:/static/","classpath:/image/")
+        registry.addResourceHandler(
+                "/**")
+                .addResourceLocations(
+                        "classpath:/static/image",
+                        "classpath:/static/",
+                        "classpath:/image/")
                 .setCachePeriod(0);
     }
 
