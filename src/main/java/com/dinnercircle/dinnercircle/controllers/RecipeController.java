@@ -155,7 +155,7 @@ public class RecipeController {
         model.addAttribute("recipe", recipe);
         recipe.setRecipeSteps(recipeSteps);
         recipeRepository.save(recipe);
-        return "redirect:../";
+        return "redirect:../view/" + recipeId;
     }
 
 
