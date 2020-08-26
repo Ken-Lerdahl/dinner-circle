@@ -4,7 +4,6 @@ import org.javatuples.Triplet;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,11 +13,11 @@ import java.util.List;
 @Entity
 public class Recipe extends AbstractEntity{
 
-//    @ManyToMany
-//    private List<Ingredient> ingredients = new ArrayList<>();
-
     @OneToMany(mappedBy = "recipe")
     private List<IngredientListItem> ingredientListItems= new ArrayList<>();
+
+//    @ManyToOne
+//    private MealPlan mealPlan;
 
     @NotBlank(message = "Name of recipe is required")
     @Size(min = 5, max = 50, message = "Name of recipe must be between 5 and 50 characters")
@@ -85,27 +84,15 @@ public class Recipe extends AbstractEntity{
         this.recipeSteps = recipeSteps;
     }
 
-//    public List<Ingredient> getIngredients() {
-//        return ingredients;
-//    }
-//
-//    public void setIngredients(List<Ingredient> ingredients) {
-//        this.ingredients = ingredients;
-//    }
-//
-//    public void addIngredient (Ingredient ingredient) {
-//        this.ingredients.add(ingredient);
-//    }
-
     public List<IngredientListItem> getIngredientListItems() {
         return ingredientListItems;
     }
-
-//    public void setIngredientListItems(List<IngredientListItem> ingredientListItems) {
-//        this.ingredientListItems = ingredientListItems;
+//
+//    public MealPlan getMealPlan() {
+//        return mealPlan;
 //    }
 //
-//    public void addIngredientListItem (IngredientListItem ingredientTriplet) {
-//        this.ingredientListItems.add(ingredientTriplet);
+//    public void setMealPlan(MealPlan mealPlan) {
+//        this.mealPlan = mealPlan;
 //    }
 }

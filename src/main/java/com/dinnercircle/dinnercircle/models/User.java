@@ -1,8 +1,11 @@
 package com.dinnercircle.dinnercircle.models;
 
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.beans.factory.support.SecurityContextProvider;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -27,6 +30,9 @@ public class User  extends AbstractEntity{
 
     @NotNull
     private String lastName;
+
+    @OneToOne
+    private MealPlan mealPlan;
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -64,4 +70,14 @@ public class User  extends AbstractEntity{
     public boolean isMatchingPassword(String password) {
         return encoder.matches(password, pwHash);
     }
+
+    public MealPlan getMealPlan() {
+        return mealPlan;
+    }
+
+    public void setMealPlan(MealPlan mealPlan) {
+        this.mealPlan = mealPlan;
+    }
+
+
 }

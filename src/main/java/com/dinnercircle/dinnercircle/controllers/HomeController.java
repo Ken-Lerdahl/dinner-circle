@@ -17,9 +17,5 @@ public class HomeController {
     public String displayIndex() {
         return "/index";
     }
-    @GetMapping("mealplan")
-    public String displayMealplan() {
-        return "mealplan";
-    }
 
 }

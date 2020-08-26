@@ -1,16 +1,17 @@
 package com.dinnercircle.dinnercircle.models;
 
-import com.dinnercircle.dinnercircle.models.data.IngredientListItemRepostiory;
-import com.dinnercircle.dinnercircle.models.data.IngredientRepository;
-import com.dinnercircle.dinnercircle.models.data.RecipeRepository;
-import com.dinnercircle.dinnercircle.models.data.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.dinnercircle.dinnercircle.controllers.AuthenticationController;
+import com.dinnercircle.dinnercircle.models.data.*;
+
+
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
+
 
 public class SearchRepository {
+
 
     public static List<IngredientListItem> getRecipeIngredientListFromRepository(IngredientListItemRepostiory ingListRepo, int recipeId) {
 
@@ -23,5 +24,19 @@ public class SearchRepository {
         }
         return results;
     }
+
+
+//
+//    public static MealPlan getMealPlanForUser(MealPlanRepository mealPlanRepository) {
+//
+//
+//        MealPlan userMealPlan = null;
+//        for (MealPlan plan : mealPlanRepository.findAll()) {
+//            if (plan.getUser().getId() == userId) {
+//                userMealPlan = plan;
+//            }
+//        }
+//        return userMealPlan;
+//    }
 
 }
