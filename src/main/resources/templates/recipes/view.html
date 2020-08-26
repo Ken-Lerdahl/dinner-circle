@@ -25,13 +25,22 @@
                     <th scope="col">Ingredient</th>
                 </tr>
             </thead>
-<!--            <tbody>-->
-<!--                <tr h:each="item : ${recipe.ingredientListItems}">-->
-<!--                    <td th:text="${item.getMeasuredAmountOnListItem()}"></td>-->
-<!--                </tr>-->
-<!--            </tbody>-->
+            <tbody>
+                <tr th:each="item : ${ingredientListItems}">
+                    <td th:text="${item.measuredAmountOnListItem}"></td>
+                    <td th:text="${item.unitOnListItem.displayName}"></td>
+                    <td th:text="${item.ingredientOnListItem.name}"></td>
+                </tr>
+            </tbody>
         </table>
     </div>
+</div>
+
+<div>
+    <h2>Recipe Steps</h2>
+    <ul>
+        <li th:text="${recipe.recipeSteps}"></li>
+    </ul>
 </div>
 </body>
 </html>

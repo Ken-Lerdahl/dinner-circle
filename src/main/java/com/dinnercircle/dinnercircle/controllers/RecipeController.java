@@ -1,9 +1,6 @@
 package com.dinnercircle.dinnercircle.controllers;
 
-import com.dinnercircle.dinnercircle.models.Ingredient;
-import com.dinnercircle.dinnercircle.models.IngredientListItem;
-import com.dinnercircle.dinnercircle.models.Recipe;
-import com.dinnercircle.dinnercircle.models.UnitsOfMeasurement;
+import com.dinnercircle.dinnercircle.models.*;
 import com.dinnercircle.dinnercircle.models.data.IngredientListItemRepostiory;
 import com.dinnercircle.dinnercircle.models.data.IngredientRepository;
 import com.dinnercircle.dinnercircle.models.data.RecipeRepository;
@@ -16,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -141,6 +139,8 @@ public class RecipeController {
             Recipe recipe = (Recipe) optRecipe.get();
             model.addAttribute("title", "Add Ingredients");
             model.addAttribute("recipe", recipe);
+            model.addAttribute("ingredientListItems",
+                    SearchRepository.getRecipeIngredientListFromRepository(ingredientListItemRepostiory, recipeId));
             return "recipes/addsteps";
         } else {
             return "redirect:../";
@@ -165,9 +165,13 @@ public class RecipeController {
 
 
         Optional<Recipe> optRecipe = recipeRepository.findById(recipeId);
+
         if (optRecipe.isPresent()) {
             Recipe recipe = (Recipe) optRecipe.get();
+
             model.addAttribute("recipe", recipe);
+            model.addAttribute("ingredientListItems",
+                    SearchRepository.getRecipeIngredientListFromRepository(ingredientListItemRepostiory, recipeId));
 
             return "recipes/view";
         } else {
