@@ -5,13 +5,12 @@ import com.dinnercircle.dinnercircle.models.Recipe;
 import com.dinnercircle.dinnercircle.models.SearchRepository;
 import com.dinnercircle.dinnercircle.models.User;
 import com.dinnercircle.dinnercircle.models.data.MealPlanRepository;
+import com.dinnercircle.dinnercircle.models.data.RecipeRepository;
 import com.dinnercircle.dinnercircle.models.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("mealplan")
@@ -22,6 +21,9 @@ public class MealPlanController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RecipeRepository recipeRepository;
 
 
     @GetMapping
@@ -57,6 +59,30 @@ public class MealPlanController {
     public String processMealPlan(Model model) {
 
 // add code to either process buttons separately or together
+        return "mealplan/index";
+    }
+
+    @GetMapping("selectmeal/{mealDay}")
+    public String displaySelectMeal(Model model, @PathVariable String mealDay) {
+        model.addAttribute("title", "Select a Meal");
+        model.addAttribute("recipes", recipeRepository.findAll());
+        return "mealplan/selectmeal";
+    }
+
+    @PostMapping("selectmeal/{mealDay}")
+    public String processSelectMeal(Model model, @PathVariable String mealDay, @RequestParam int recipeId) {
+        MealPlan currentUserMealPlan = SearchRepository.getMealPlanForUser(userRepository);
+        switch (mealDay) {
+            case "monday" -> currentUserMealPlan.setMonday(recipeId);
+            case "tuesday" -> currentUserMealPlan.setTuesday(recipeId);
+            case "wednesday" -> currentUserMealPlan.setWednesday(recipeId);
+            case "thursday" -> currentUserMealPlan.setThursday(recipeId);
+            case "friday" -> currentUserMealPlan.setFriday(recipeId);
+            case "saturday" -> currentUserMealPlan.setSaturday(recipeId);
+            case "sunday" -> currentUserMealPlan.setSunday(recipeId);
+        }
+            mealPlanRepository.save(currentUserMealPlan);
+//        add buttons on view to get recipeId
         return "mealplan/index";
     }
 

@@ -7,9 +7,16 @@
 <header th:replace="fragments :: page-header"></header>
 
 <div>
-    <th:block>
-        <img th:if="${mealPlan.monday == 0}" src="/image/monday-not-selected.png">
-        <img th:if="${mealPlan.monday != 0}" src="/image/monday-selected.png">
+    <th:block th:if="${mealPlan.monday == 0}">
+        <a th:href="@{'/mealplan/selectmeal/monday'}">
+            <img  src="/image/monday-not-selected.png">
+        </a>
+
+
+
+    </th:block>
+    <th:block th:if="${mealPlan.monday != 0}">
+        <img  src="/image/monday-selected.png">
     </th:block>
 </div>
 
