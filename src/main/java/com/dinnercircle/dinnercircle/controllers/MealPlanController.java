@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -23,13 +24,11 @@ public class MealPlanController {
     private UserRepository userRepository;
 
 
-
     @GetMapping
     public String displayMealplan(Model model) {
 
-        //currently creates a new meal plan for new users, but first time loading page throws a no such element exception
-
         User currentUser = SearchRepository.getCurrentUser(userRepository);
+
 
         model.addAttribute("title", "Meal Plan");
         if (SearchRepository.getMealPlanForUser(userRepository) != null) {
@@ -40,13 +39,31 @@ public class MealPlanController {
             MealPlan newUserMealPlan = new MealPlan();
             SearchRepository.getCurrentUser(userRepository).setMealPlan(newUserMealPlan);
             userRepository.save(currentUser);
-            mealPlanRepository.findById(newUserMealPlan.getId()).get().setUser(currentUser);
-            userRepository.save(currentUser);
+//            mealPlanRepository.save(newUserMealPlan);
+//            newUserMealPlan.setUser(currentUser);
+//            mealPlanRepository.findById(newUserMealPlan.getId()).get().setUser(currentUser);
+//            userRepository.save(currentUser);
             model.addAttribute("mealPlan", newUserMealPlan);
+            return "mealplan/welcome";
+//            model.addAttribute(new MealPlan());
+//            userRepository.save(currentUser);
 
         }
 
         return "mealplan/index";
+    }
+
+    @PostMapping
+    public String processMealPlan(Model model) {
+
+// add code to either process buttons separately or together
+        return "mealplan/index";
+    }
+
+    @GetMapping("welcome")
+    public String displayWelcome(Model model) {
+        model.addAttribute("title", "Meal Plan Tutorial");
+        return "mealplan/welcome";
     }
 }
 

@@ -24,8 +24,8 @@ public class MealPlan extends AbstractEntity {
 
     public MealPlan(){};
 
-    public MealPlan(User user, int monday, int tuesday, int wednesday, int thursday, int friday, int saturday, int sunday) {
-        this.user = user;
+    public MealPlan(int monday, int tuesday, int wednesday, int thursday, int friday, int saturday, int sunday) {
+
         this.monday = monday;
         this.tuesday = tuesday;
         this.wednesday = wednesday;

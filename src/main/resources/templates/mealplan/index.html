@@ -6,9 +6,12 @@
 
 <header th:replace="fragments :: page-header"></header>
 
-<th:block>
-    <img th:if="${mealPlan.monday != null}" src="/image/monday-not-selected.png">
-</th:block>
+<div>
+    <th:block>
+        <img th:if="${mealPlan.monday == 0}" src="/image/monday-not-selected.png">
+        <img th:if="${mealPlan.monday != 0}" src="/image/monday-selected.png">
+    </th:block>
+</div>
 
 </body>
 </html>
