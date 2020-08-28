@@ -4,6 +4,7 @@ import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.support.SecurityContextProvider;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
@@ -31,7 +32,7 @@ public class User  extends AbstractEntity{
     @NotNull
     private String lastName;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private MealPlan mealPlan;
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();

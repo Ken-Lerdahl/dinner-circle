@@ -2,7 +2,7 @@ package com.dinnercircle.dinnercircle.models;
 
 import com.dinnercircle.dinnercircle.controllers.AuthenticationController;
 import com.dinnercircle.dinnercircle.models.data.*;
-
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 import java.util.ArrayList;
@@ -26,17 +26,18 @@ public class SearchRepository {
     }
 
 
-//
-//    public static MealPlan getMealPlanForUser(MealPlanRepository mealPlanRepository) {
-//
-//
-//        MealPlan userMealPlan = null;
-//        for (MealPlan plan : mealPlanRepository.findAll()) {
-//            if (plan.getUser().getId() == userId) {
-//                userMealPlan = plan;
-//            }
-//        }
-//        return userMealPlan;
-//    }
+    public static User getCurrentUser(UserRepository userRepository) {
+        User currentUser;
+        return currentUser = userRepository.findById(AuthenticationController.getCurrentUserId()).get();
+    }
+
+
+
+    public static MealPlan getMealPlanForUser(UserRepository userRepository) {
+
+        MealPlan userMealPlan;
+        return userMealPlan = userRepository.findById(AuthenticationController.getCurrentUserId()).get().getMealPlan();
+
+    }
 
 }

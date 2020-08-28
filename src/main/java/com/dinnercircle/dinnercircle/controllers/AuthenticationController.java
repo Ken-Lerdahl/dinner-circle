@@ -5,6 +5,7 @@ import com.dinnercircle.dinnercircle.models.data.UserRepository;
 import com.dinnercircle.dinnercircle.models.dto.LoginFormDTO;
 import com.dinnercircle.dinnercircle.models.dto.RegisterFormDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.support.SecurityContextProvider;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -26,6 +27,8 @@ public class AuthenticationController {
 
         private static final String userSessionKey = "user";
 
+        private static Integer currentUserId;
+
         public User getUserFromSession(HttpSession session) {
             Integer userId = (Integer) session.getAttribute(userSessionKey);
             if (userId == null) {
@@ -37,7 +40,7 @@ public class AuthenticationController {
             if (user.isEmpty()) {
                 return null;
             }
-
+            currentUserId = user.get().getId();
             return user.get();
         }
 
@@ -144,5 +147,7 @@ public class AuthenticationController {
             return "redirect:";
         }
 
-
+        public static Integer getCurrentUserId() {
+            return currentUserId;
+        }
 }
