@@ -7,7 +7,7 @@
 <div th:replace="fragments :: page-header"></div>
 
 <div class="container body-content">
-    <h2>All Recipes</h2>
+    <h2>Select a Recipe</h2>
     <div>
         <a th:href="@{'/recipes/add'}">
         <p th:unless="${recipes} and ${recipes.size()}">Go Add some recipes!</p>
@@ -16,7 +16,9 @@
 
     <ul>
         <li th:each="recipe : ${recipes}">
-            <a th:href="@{'/recipes/view/' + ${recipe.id}}" th:text="${recipe.name}"></a>
+            <p style="display-inline;" th:text="${recipe.name}"></p>
+            <input type="submit" class="btn btn-outline-primary" name="recipeId" value="Select" th:value="${recipe.id}"/>
+
         </li>
     </ul>
 
