@@ -69,7 +69,7 @@ public class MealPlanController {
         return "mealplan/selectmeal";
     }
 
-    @PostMapping("selectmeal/{mealDay}")
+    @RequestMapping(value = "selectmeal/{mealDay}", params = "select", method=RequestMethod.POST)
     public String processSelectMeal(Model model, @PathVariable String mealDay, @RequestParam int recipeId) {
         MealPlan currentUserMealPlan = SearchRepository.getMealPlanForUser(userRepository);
         switch (mealDay) {
@@ -83,7 +83,7 @@ public class MealPlanController {
         }
             mealPlanRepository.save(currentUserMealPlan);
 //        add buttons on view to get recipeId
-        return "mealplan/index";
+        return "redirect:../";
     }
 
     @GetMapping("welcome")

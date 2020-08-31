@@ -14,13 +14,20 @@
         </a>
     </div>
 
-    <ul>
-        <li th:each="recipe : ${recipes}">
-            <p style="display-inline;" th:text="${recipe.name}"></p>
-            <input type="submit" class="btn btn-outline-primary" name="recipeId" value="Select" th:value="${recipe.id}"/>
-
-        </li>
-    </ul>
+    <form method="post" style="max-width:600px;">
+        <div class="form-row align-items-center">
+        <select class="custom-select mr-sm-2" th:for="recipeId" name="recipeId">
+            <option selected>Choose a Meal...</option>
+            <option th:each="recipe : ${recipes}"
+                    th:text="${recipe.name}"
+                    th:value="${recipe.id}">
+            </option>
+        </select>
+        </div>
+        <div class="col-auto my-1">
+        <input type="submit" class="btn btn-outline-primary" name="select" value="Select">
+        </div>
+    </form>
 
 
 </div>
