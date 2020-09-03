@@ -1,6 +1,7 @@
 package com.dinnercircle.dinnercircle.models;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public class MealPlan extends AbstractEntity {
     @OneToOne
     private User user;
 
+
     private int monday;
     private int tuesday;
     private int wednesday;
@@ -24,8 +26,8 @@ public class MealPlan extends AbstractEntity {
 
     public MealPlan(){};
 
-    public MealPlan(int monday, int tuesday, int wednesday, int thursday, int friday, int saturday, int sunday) {
-
+    public MealPlan(User user, int monday, int tuesday, int wednesday, int thursday, int friday, int saturday, int sunday) {
+        this.user = user;
         this.monday = monday;
         this.tuesday = tuesday;
         this.wednesday = wednesday;

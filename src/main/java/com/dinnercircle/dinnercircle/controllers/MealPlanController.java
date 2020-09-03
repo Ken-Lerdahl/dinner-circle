@@ -36,17 +36,39 @@ public class MealPlanController {
         if (SearchRepository.getMealPlanForUser(userRepository) != null) {
             MealPlan currentUserMealPlan = SearchRepository.getMealPlanForUser(userRepository);
             model.addAttribute("mealPlan", currentUserMealPlan);
+            if (currentUserMealPlan.getMonday() != 0) {
+                model.addAttribute("mondayMeal", recipeRepository.findById(currentUserMealPlan.getMonday()).get());
+            }
+            if (currentUserMealPlan.getTuesday() != 0) {
+                model.addAttribute("tuesdayMeal", recipeRepository.findById(currentUserMealPlan.getTuesday()).get());
+            }
+            if (currentUserMealPlan.getWednesday() != 0) {
+                model.addAttribute("wednesdayMeal", recipeRepository.findById(currentUserMealPlan.getWednesday()).get());
+            }
+            if (currentUserMealPlan.getThursday() != 0) {
+                model.addAttribute("thursdayMeal", recipeRepository.findById(currentUserMealPlan.getThursday()).get());
+            }
+            if (currentUserMealPlan.getFriday() != 0) {
+                model.addAttribute("fridayMeal", recipeRepository.findById(currentUserMealPlan.getFriday()).get());
+            }
+            if (currentUserMealPlan.getSaturday() != 0) {
+                model.addAttribute("saturdayMeal", recipeRepository.findById(currentUserMealPlan.getSaturday()).get());
+            }
+            if (currentUserMealPlan.getSunday() != 0) {
+                model.addAttribute("sundayMeal", recipeRepository.findById(currentUserMealPlan.getSunday()).get());
+            }
         }
         else {
             MealPlan newUserMealPlan = new MealPlan();
             SearchRepository.getCurrentUser(userRepository).setMealPlan(newUserMealPlan);
-            userRepository.save(currentUser);
+
 //            mealPlanRepository.save(newUserMealPlan);
-//            newUserMealPlan.setUser(currentUser);
+            newUserMealPlan.setUser(currentUser);
+            userRepository.save(currentUser);
 //            mealPlanRepository.findById(newUserMealPlan.getId()).get().setUser(currentUser);
 //            userRepository.save(currentUser);
             model.addAttribute("mealPlan", newUserMealPlan);
-            return "mealplan/welcome";
+            return "redirect:/mealplan";
 //            model.addAttribute(new MealPlan());
 //            userRepository.save(currentUser);
 
@@ -86,11 +108,7 @@ public class MealPlanController {
         return "redirect:../";
     }
 
-    @GetMapping("welcome")
-    public String displayWelcome(Model model) {
-        model.addAttribute("title", "Meal Plan Tutorial");
-        return "mealplan/welcome";
-    }
+
 }
 
 
