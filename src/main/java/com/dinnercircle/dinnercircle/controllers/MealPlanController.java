@@ -12,6 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Optional;
+
 @Controller
 @RequestMapping("mealplan")
 public class MealPlanController {
@@ -77,12 +80,20 @@ public class MealPlanController {
         return "mealplan/index";
     }
 
-    @PostMapping
-    public String processMealPlan(Model model) {
+    @RequestMapping(value = "", params = "make", method=RequestMethod.POST)
+    public String processMealPlanMake(Model model, @RequestParam int mealId) {
 
-// add code to either process buttons separately or together
-        return "mealplan/index";
+        Optional<Recipe> optRecipe = recipeRepository.findById(mealId);
+
+        Recipe recipe = (Recipe) optRecipe.get();
+        recipe.setLastMade(LocalDate.now());
+        recipeRepository.save(recipe);
+
+        return "redirect:../recipes/view/" + recipe.getId();
     }
+
+//    @RequestMapping(value = "", params = "change", method = RequestMethod.POST)
+//    public String processMealPlanChange(@RequestParam )
 
     @GetMapping("selectmeal/{mealDay}")
     public String displaySelectMeal(Model model, @PathVariable String mealDay) {

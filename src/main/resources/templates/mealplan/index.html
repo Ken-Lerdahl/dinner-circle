@@ -23,7 +23,44 @@
             <h3 th:text="${mondayMeal.name}"></h3>
         </div>
         <div class="p-2">
-<!--add buttons here for making / changing meal-->
+            <form method="post">
+                <input type="hidden" name="mealId" th:value="${mondayMeal.id}"/>
+                <button class="btn btn-outline-primary" type="submit" name="make">Ready to Cook</button>
+            </form>
+        </div>
+        <div class="p-2">
+            <a th:href="@{'/mealplan/selectmeal/monday'}">
+                <button class="btn btn-outline-secondary">Change Meal</button>
+            </a>
+        </div>
+    </th:block>
+</div>
+
+<div class="d-flex flex-row align-items-center">
+    <th:block th:if="${mealPlan.tuesday == 0}">
+        <div class="p-2">
+            <a th:href="@{'/mealplan/selectmeal/tuesday'}">
+                <img  src="/image/tuesday-not-selected.png">
+            </a>
+        </div>
+    </th:block>
+    <th:block th:if="${mealPlan.tuesday != 0}">
+        <div class="p-2">
+            <img  src="/image/tuesday-selected.png">
+        </div>
+        <div class="p-2">
+            <h3 th:text="${tuesdayMeal.name}"></h3>
+        </div>
+        <div class="p-2">
+            <form method="post">
+                <input type="hidden" name="mealId" th:value="${tuesdayMeal.id}"/>
+                <button class="btn btn-outline-primary" type="submit" name="make">Ready to Cook</button>
+            </form>
+        </div>
+        <div class="p-2">
+            <a th:href="@{'/mealplan/selectmeal/tuesday'}">
+                <button class="btn btn-outline-secondary">Change Meal</button>
+            </a>
         </div>
     </th:block>
 </div>
