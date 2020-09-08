@@ -80,7 +80,7 @@ public class MealPlanController {
         return "mealplan/index";
     }
 
-    @RequestMapping(value = "", params = "make", method=RequestMethod.POST)
+    @PostMapping(value = "", params = "make")
     public String processMealPlanMake(Model model, @RequestParam int mealId) {
 
         Optional<Recipe> optRecipe = recipeRepository.findById(mealId);
@@ -91,9 +91,6 @@ public class MealPlanController {
 
         return "redirect:../recipes/view/" + recipe.getId();
     }
-
-//    @RequestMapping(value = "", params = "change", method = RequestMethod.POST)
-//    public String processMealPlanChange(@RequestParam )
 
     @GetMapping("selectmeal/{mealDay}")
     public String displaySelectMeal(Model model, @PathVariable String mealDay) {

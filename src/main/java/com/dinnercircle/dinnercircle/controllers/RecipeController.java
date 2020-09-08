@@ -175,4 +175,22 @@ public class RecipeController {
         }
     }
 
+    @GetMapping(value = "edit/{recipeId}")
+    public String processEditRecipe(Model model, @PathVariable int recipeId) {
+        Optional<Recipe> optRecipe = recipeRepository.findById(recipeId);
+
+        if (optRecipe.isPresent()) {
+            Recipe recipe = (Recipe) optRecipe.get();
+
+            model.addAttribute("recipe", recipe);
+            model.addAttribute("ingredientListItems",
+                    SearchRepository.getRecipeIngredientListFromRepository(ingredientListItemRepostiory, recipeId));
+
+            return "recipes/edit";
+        } else {
+            return "redirect:../";
+        }
+    }
+
+
 }
