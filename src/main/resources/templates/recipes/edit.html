@@ -18,7 +18,34 @@
         <input class="form-control" th:field="${recipe.recipeType}" th:placeholder="${recipe.recipeType}"/>
         <span th:errors="${recipe.recipeType}" class="error"></span>
     </div>
+
+    <div>
+        <h3>Ingredient List</h3>
+        <div class="form-group">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Measured Amount</th>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Ingredient</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${ingredientListItems}">
+<!--                    <td th:text="${item.measuredAmountOnListItem}"></td>-->
+                    <td>
+                        <input class="form-control"  th:field="${item.measuredAmountOnListItem}" th:placeholder="${item.measuredAmountOnListItem}">
+                    </td>
+                    <td th:text="${item.unitOnListItem.displayName}"></td>
+                    <td th:text="${item.ingredientOnListItem.name}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <input type="submit" value="Save Changes" name="saveChanges">
 </form>
+
 
 </body>
 </html>

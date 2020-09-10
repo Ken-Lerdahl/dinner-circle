@@ -176,7 +176,7 @@ public class RecipeController {
     }
 
     @GetMapping(value = "edit/{recipeId}")
-    public String processEditRecipe(Model model, @PathVariable int recipeId) {
+    public String displayEditRecipe(Model model, @PathVariable int recipeId) {
         Optional<Recipe> optRecipe = recipeRepository.findById(recipeId);
 
         if (optRecipe.isPresent()) {
@@ -190,6 +190,22 @@ public class RecipeController {
         } else {
             return "redirect:../";
         }
+    }
+
+    @PostMapping(value = "edit/{recipeId}", params = "saveChanges")
+    public String processEditRecipe(Model model, @PathVariable int recipeId, @RequestParam String name, @RequestParam String recipeType) {
+        Optional<Recipe> optRecipe = recipeRepository.findById(recipeId);
+
+        if (optRecipe.isPresent()) {
+            Recipe recipe = (Recipe) optRecipe.get();
+
+            recipe.setName(name);
+            recipe.setRecipeType(recipeType);
+            recipeRepository.save(recipe);
+
+        }
+
+        return "redirect:../view/" + recipeId;
     }
 
 
