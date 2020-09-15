@@ -175,6 +175,8 @@ public class RecipeController {
         }
     }
 
+    @PostMapping
+
     @GetMapping(value = "edit/{recipeId}")
     public String displayEditRecipe(Model model, @PathVariable int recipeId) {
         Optional<Recipe> optRecipe = recipeRepository.findById(recipeId);
@@ -185,6 +187,8 @@ public class RecipeController {
             model.addAttribute("recipe", recipe);
             model.addAttribute("ingredientListItems",
                     SearchRepository.getRecipeIngredientListFromRepository(ingredientListItemRepostiory, recipeId));
+            model.addAttribute("ingredients", ingredientRepository.findAll());
+            model.addAttribute("units", UnitsOfMeasurement.values());
 
             return "recipes/edit";
         } else {

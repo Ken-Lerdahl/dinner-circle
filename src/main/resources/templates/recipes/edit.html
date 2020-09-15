@@ -31,13 +31,42 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="item : ${ingredientListItems}">
+                <tr th:each="item : ${ingredientListItems}" th:value>
 <!--                    <td th:text="${item.measuredAmountOnListItem}"></td>-->
+                    <!--                    <td th:text="${item.unitOnListItem.displayName}"></td>-->
+                    <!--                    <td th:text="${item.ingredientOnListItem.name}"></td>-->
                     <td>
-                        <input class="form-control"  th:field="${item.measuredAmountOnListItem}" th:placeholder="${item.measuredAmountOnListItem}">
+                        <input class="form-control" name="measuredAmountOnListItem"  th:placeholder="${item.measuredAmountOnListItem}">
                     </td>
-                    <td th:text="${item.unitOnListItem.displayName}"></td>
-                    <td th:text="${item.ingredientOnListItem.name}"></td>
+
+                    <td>
+                        <select name="unitOnListItem" >
+                            <option
+
+                                    th:each="unit : ${units}"
+                                    th:text="${unit.displayName}"
+                                    th:selected="${unit} == ${item.unitOnListItem}"
+                                    th:value="${unit}">
+
+                            </option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <select name="ingredientOnListItem" >
+                            <option
+                                    th:each="ingredient : ${ingredients}"
+                                    th:text="${ingredient.name}"
+                                    th:selected="${ingredient.id} == ${item.ingredientOnListItem.id}"
+                                    th:value="${ingredient.id}">
+                            </option>
+                        </select>
+                    </td>
+                    <td>
+<!--                        save ingredient changes to tables in controller, add delete button to table, add delete processing to controller (new method params
+                            add "add more" button to bottom after table, add recipe steps, format page-->
+                    </td>
+
                 </tr>
                 </tbody>
             </table>
