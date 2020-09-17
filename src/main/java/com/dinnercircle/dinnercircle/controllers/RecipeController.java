@@ -11,6 +11,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -175,7 +176,7 @@ public class RecipeController {
         }
     }
 
-    @PostMapping
+
 
     @GetMapping(value = "edit/{recipeId}")
     public String displayEditRecipe(Model model, @PathVariable int recipeId) {
@@ -186,7 +187,7 @@ public class RecipeController {
 
             model.addAttribute("recipe", recipe);
             model.addAttribute("ingredientListItems",
-                    SearchRepository.getRecipeIngredientListFromRepository(ingredientListItemRepostiory, recipeId));
+                    recipe.getIngredientListItems());
             model.addAttribute("ingredients", ingredientRepository.findAll());
             model.addAttribute("units", UnitsOfMeasurement.values());
 
@@ -197,14 +198,22 @@ public class RecipeController {
     }
 
     @PostMapping(value = "edit/{recipeId}", params = "saveChanges")
-    public String processEditRecipe(Model model, @PathVariable int recipeId, @RequestParam String name, @RequestParam String recipeType) {
+    public String processEditRecipe(Model model, @PathVariable int recipeId, @RequestParam String name, @RequestParam String recipeType, @RequestParam List<Integer> items, @RequestParam Ingredient ingredientOnListItem) {
         Optional<Recipe> optRecipe = recipeRepository.findById(recipeId);
 
         if (optRecipe.isPresent()) {
             Recipe recipe = (Recipe) optRecipe.get();
 
+            List<IngredientListItem> ingredientListItemObjs = (List<IngredientListItem>) ingredientListItemRepostiory.findAllById(items);
+
+            for (IngredientListItem item : ingredientListItemObjs) {
+                item.setIngredient(ingredientOnListItem);
+                ingredientListItemRepostiory.save(item);
+            }
+
             recipe.setName(name);
             recipe.setRecipeType(recipeType);
+
             recipeRepository.save(recipe);
 
         }

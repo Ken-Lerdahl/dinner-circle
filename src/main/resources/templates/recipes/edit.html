@@ -31,12 +31,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="item : ${ingredientListItems}" th:value>
-<!--                    <td th:text="${item.measuredAmountOnListItem}"></td>-->
-                    <!--                    <td th:text="${item.unitOnListItem.displayName}"></td>-->
-                    <!--                    <td th:text="${item.ingredientOnListItem.name}"></td>-->
+                <tr th:each="item : ${ingredientListItems}" th:value="${item.id}" name="items" th:for="items">
+
                     <td>
-                        <input class="form-control" name="measuredAmountOnListItem"  th:placeholder="${item.measuredAmountOnListItem}">
+                        <input class="form-control" name="measuredAmountOnListItem"  th:placeholder="${item.measuredAmountOnListItem}" th:value="${item.measuredAmountOnListItem}">
                     </td>
 
                     <td>
@@ -46,7 +44,7 @@
                                     th:each="unit : ${units}"
                                     th:text="${unit.displayName}"
                                     th:selected="${unit} == ${item.unitOnListItem}"
-                                    th:value="${unit}">
+                                    th:value="${item.unitOnListItem}">
 
                             </option>
                         </select>
@@ -58,7 +56,7 @@
                                     th:each="ingredient : ${ingredients}"
                                     th:text="${ingredient.name}"
                                     th:selected="${ingredient.id} == ${item.ingredientOnListItem.id}"
-                                    th:value="${ingredient.id}">
+                                    th:value="${item.ingredientOnListItem.id}">
                             </option>
                         </select>
                     </td>
