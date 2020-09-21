@@ -198,25 +198,34 @@ public class RecipeController {
     }
 
     @PostMapping(value = "edit/{recipeId}", params = "saveChanges")
-    public String processEditRecipe(Model model, @PathVariable int recipeId, @RequestParam String name, @RequestParam String recipeType, @RequestParam List<Integer> items, @RequestParam Ingredient ingredientOnListItem) {
+    public String processEditRecipe(Model model, @PathVariable int recipeId, @RequestParam String name, @RequestParam String recipeType, @RequestParam List<Integer> items,
+                                    @RequestParam List<Double> measuredAmountOnListItem, @RequestParam List<UnitsOfMeasurement> unitOnListItem, @RequestParam List<Ingredient> ingredientOnListItem) {
         Optional<Recipe> optRecipe = recipeRepository.findById(recipeId);
 
-        if (optRecipe.isPresent()) {
+
             Recipe recipe = (Recipe) optRecipe.get();
 
-            List<IngredientListItem> ingredientListItemObjs = (List<IngredientListItem>) ingredientListItemRepostiory.findAllById(items);
+           List<IngredientListItem> ingredientListItemObjs = (List<IngredientListItem>) ingredientListItemRepostiory.findAllById(items);
 
-            for (IngredientListItem item : ingredientListItemObjs) {
-                item.setIngredient(ingredientOnListItem);
-                ingredientListItemRepostiory.save(item);
-            }
+           for (int i = 0; i <= ingredientListItemObjs.size() - 1; i++) {
+               ingredientListItemObjs.get(i).setMeasuredAmountOnListItem(measuredAmountOnListItem.get(i));
+               ingredientListItemObjs.get(i).setUnitOnListItem(unitOnListItem.get(i));
+               ingredientListItemObjs.get(i).setIngredient(ingredientOnListItem.get(i));
+               ingredientListItemRepostiory.save(ingredientListItemObjs.get(i));
+           }
+
+//            for (IngredientListItem item : ingredientListItemObjs) {
+//
+//                ingredientListItemRepostiory.save(item);
+//            }
+
 
             recipe.setName(name);
             recipe.setRecipeType(recipeType);
 
             recipeRepository.save(recipe);
 
-        }
+
 
         return "redirect:../view/" + recipeId;
     }
