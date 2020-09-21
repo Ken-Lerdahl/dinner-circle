@@ -197,9 +197,10 @@ public class RecipeController {
         }
     }
 
-    @PostMapping(value = "edit/{recipeId}", params = "saveChanges")
+    @PostMapping(value = "edit/{recipeId}")
     public String processEditRecipe(Model model, @PathVariable int recipeId, @RequestParam String name, @RequestParam String recipeType, @RequestParam List<Integer> items,
-                                    @RequestParam List<Double> measuredAmountOnListItem, @RequestParam List<UnitsOfMeasurement> unitOnListItem, @RequestParam List<Ingredient> ingredientOnListItem) {
+                                    @RequestParam List<Double> measuredAmountOnListItem, @RequestParam List<UnitsOfMeasurement> unitOnListItem, @RequestParam List<Ingredient> ingredientOnListItem,
+                                    @RequestParam String recipeSteps) {
         Optional<Recipe> optRecipe = recipeRepository.findById(recipeId);
 
 
@@ -214,14 +215,10 @@ public class RecipeController {
                ingredientListItemRepostiory.save(ingredientListItemObjs.get(i));
            }
 
-//            for (IngredientListItem item : ingredientListItemObjs) {
-//
-//                ingredientListItemRepostiory.save(item);
-//            }
-
 
             recipe.setName(name);
             recipe.setRecipeType(recipeType);
+            recipe.setRecipeSteps(recipeSteps);
 
             recipeRepository.save(recipe);
 
@@ -230,5 +227,11 @@ public class RecipeController {
         return "redirect:../view/" + recipeId;
     }
 
+    @GetMapping(value = "edit/{recipeId}/deleteingredient/{ingredientItemId}")
+    public String processEditRecipeDeleteIngredientItem(@PathVariable int ingredientItemId, @PathVariable int recipeId) {
+        IngredientListItem ingToDelete = ingredientListItemRepostiory.findById(ingredientItemId).get();
+        ingredientListItemRepostiory.delete(ingToDelete);
+        return "recipes/edit" + recipeId;
+    }
 
 }

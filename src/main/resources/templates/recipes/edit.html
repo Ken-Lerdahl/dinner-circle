@@ -20,11 +20,12 @@
     </div>
 
     <div>
-        <h3>Ingredient List</h3>
+        <h6>Ingredient List</h6>
         <div class="form-group">
             <table class="table table-striped">
                 <thead>
                 <tr>
+                    <th></th>
                     <th scope="col">Measured Amount</th>
                     <th scope="col">Unit</th>
                     <th scope="col">Ingredient</th>
@@ -64,7 +65,10 @@
                         </select>
                     </td>
                     <td>
-<!--                        save ingredient changes to tables in controller, add delete button to table, add delete processing to controller (new method params
+                        <a th:href="@{'/recipes/edit/' + ${recipe.id} + 'deleteingredient/' + ${item.id}}">
+                            <button class="btn btn-outline-danger"  >Delete Ingredient</button>
+                        </a>
+<!--                        add delete button to table, add delete processing to controller (new method params
                             add "add more" button to bottom after table, add recipe steps, format page-->
                     </td>
 
@@ -74,7 +78,13 @@
             </table>
         </div>
     </div>
-    <input type="submit" value="Save Changes" name="saveChanges">
+
+        <div class="form-group">
+            <label th:for="recipeSteps">Recipe Steps</label>
+            <textarea class="form-control" th:field="${recipe.recipeSteps}" rows="10" th:placeholder="${recipe.recipeSteps}"></textarea>
+        </div>
+
+    <input type="submit" class="btn btn-outline-success" value="Save Changes" name="saveChanges">
 </form>
 
 
