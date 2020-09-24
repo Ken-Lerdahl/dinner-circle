@@ -99,7 +99,13 @@ public class RecipeController {
                 ingredientListItemRepostiory.save(newIngredientListItem);
                 recipeRepository.save(recipe);
             }
-        return "redirect:../addsteps/" + recipeId;
+
+            if (recipe.getRecipeSteps().equals(null)) {
+                return "redirect:../addsteps/" + recipeId;
+            }
+            else {
+                return "redirect:../recipes/edit" + recipeId;
+            }
     }
 
     @RequestMapping(value="addingredients/{recipeId}", params="add", method=RequestMethod.POST)
@@ -197,7 +203,7 @@ public class RecipeController {
         }
     }
 
-    @PostMapping(value = "edit/{recipeId}")
+    @PostMapping(value = "edit/{recipeId}", params = "saveChanges")
     public String processEditRecipe(Model model, @PathVariable int recipeId, @RequestParam String name, @RequestParam String recipeType, @RequestParam List<Integer> items,
                                     @RequestParam List<Double> measuredAmountOnListItem, @RequestParam List<UnitsOfMeasurement> unitOnListItem, @RequestParam List<Ingredient> ingredientOnListItem,
                                     @RequestParam String recipeSteps) {
@@ -215,23 +221,20 @@ public class RecipeController {
                ingredientListItemRepostiory.save(ingredientListItemObjs.get(i));
            }
 
-
             recipe.setName(name);
             recipe.setRecipeType(recipeType);
             recipe.setRecipeSteps(recipeSteps);
-
             recipeRepository.save(recipe);
-
-
 
         return "redirect:../view/" + recipeId;
     }
 
-    @GetMapping(value = "edit/{recipeId}/deleteingredient/{ingredientItemId}")
-    public String processEditRecipeDeleteIngredientItem(@PathVariable int ingredientItemId, @PathVariable int recipeId) {
-        IngredientListItem ingToDelete = ingredientListItemRepostiory.findById(ingredientItemId).get();
+    @PostMapping(value = "edit/{recipeId}", params = "deleteIngredient")
+    public String processDeleteIngredient(@PathVariable int recipeId, @RequestParam int itemToDelete) {
+        IngredientListItem ingToDelete = ingredientListItemRepostiory.findById(itemToDelete).get();
         ingredientListItemRepostiory.delete(ingToDelete);
-        return "recipes/edit" + recipeId;
+        return "redirect:../edit/" + recipeId;
     }
+
 
 }

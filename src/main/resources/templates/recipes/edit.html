@@ -65,9 +65,9 @@
                         </select>
                     </td>
                     <td>
-                        <a th:href="@{'/recipes/edit/' + ${recipe.id} + 'deleteingredient/' + ${item.id}}">
-                            <button class="btn btn-outline-danger"  >Delete Ingredient</button>
-                        </a>
+                        <input type="hidden" th:value="${item.id}" name="itemToDelete">
+                            <button type="submit" class="btn btn-outline-danger" name="deleteIngredient" >Delete Ingredient</button>
+
 <!--                        add delete button to table, add delete processing to controller (new method params
                             add "add more" button to bottom after table, add recipe steps, format page-->
                     </td>
@@ -76,6 +76,10 @@
 
                 </tbody>
             </table>
+<!--            <a th:action="@{'/addingredients/' + ${recipe.id}}">-->
+<!--                <button type="submit" name="addMoreIngredients" value="Add More Ingredients" class="btn btn-primary btn-lg btn-block"></button>-->
+                <button th:action="@{'/addingredients/' + ${recipe.id}}" class="btn btn-primary btn-lg btn-block">Add More Ingredients</button>
+<!--            </a>-->
         </div>
     </div>
 
