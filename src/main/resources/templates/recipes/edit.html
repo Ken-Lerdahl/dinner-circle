@@ -76,10 +76,8 @@
 
                 </tbody>
             </table>
-<!--            <a th:action="@{'/addingredients/' + ${recipe.id}}">-->
-<!--                <button type="submit" name="addMoreIngredients" value="Add More Ingredients" class="btn btn-primary btn-lg btn-block"></button>-->
-                <button th:action="@{'/addingredients/' + ${recipe.id}}" class="btn btn-primary btn-lg btn-block">Add More Ingredients</button>
-<!--            </a>-->
+                <input type="submit" th:action="@{'/addingredients/' + ${recipe.id}}" class="btn btn-primary btn-lg btn-block" name="addIngredients" value="Add More Ingredients"/>
+
         </div>
     </div>
 

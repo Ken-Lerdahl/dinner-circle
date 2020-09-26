@@ -35,7 +35,13 @@
 
 
     <input type="submit" name="add" value="Add More" />
-    <input type="submit" name="next" value="Next" />
+<!--    <th:block th:if="${recipe.getRecipeSteps() == null}">-->
+    <th:block th:if="${recipe.recipeSteps == null}">
+        <input type="submit" name="next" value="Next" />
+    </th:block>
+    <th:block th:if="${recipe.recipeSteps != null}">
+        <input type="submit" name="next" value="Save And Go Back" />
+    </th:block>
 </form>
 
 </body>

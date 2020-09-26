@@ -4,7 +4,15 @@
 
 <body class="container  body-content">
 <nav th:replace="fragments :: page-header"></nav>
-<h1 th:text="${recipe.name}">Recipe Name</h1>
+<div class="d-flex flex-row align-items-center">
+    <div class="p-2">
+        <img th:if="${recipe.favorite}" src="/image/starFav.png">
+        <img th:unless="${recipe.favorite}" src="/image/starNonFav.png">
+    </div>
+    <div class="p-2">
+        <h1 th:text="${recipe.name}">Recipe Name</h1>
+    </div>
+</div>
 
 <div>
     <ul>
@@ -44,14 +52,20 @@
 </div>
 <div class="d-flex flex-row align-items-center">
     <div class="p-2">
+        <form method="post">
+            <input class="btn btn-outline-warning" type="submit" name="setFav"
+                   th:value="${favStatus}">
+        </form>
+    </div>
+    <div class="p-2">
         <a th:href="@{'/recipes/edit/' + ${recipe.id}}">
-            <button class="btn btn-outline-warning">Edit Recipe</button>
+            <button class="btn btn-outline-info">Edit Recipe</button>
         </a>
     </div>
     <div class="p-2">
         <form method="post">
             <input class="btn btn-outline-danger" type="submit" name="delete"
-                   value="Delete Recipe" onclick="Are you sure you want to delete this recipe?">
+                   value="Delete Recipe" th:onclick="Are you sure you want to delete this recipe?">
         </form>
     </div>
 </div>

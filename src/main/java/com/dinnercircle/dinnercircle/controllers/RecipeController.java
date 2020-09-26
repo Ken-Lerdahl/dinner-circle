@@ -52,7 +52,7 @@ public class RecipeController {
 
             return "recipes/add";
         }
-
+        newRecipe.setFavorite(false);
         recipeRepository.save(newRecipe);
         int recipeId = newRecipe.getId();
         return "redirect:addingredients/" + recipeId;
@@ -100,11 +100,11 @@ public class RecipeController {
                 recipeRepository.save(recipe);
             }
 
-            if (recipe.getRecipeSteps().equals(null)) {
-                return "redirect:../addsteps/" + recipeId;
+            if (recipe.getRecipeSteps() != null) {
+                return "redirect:../recipes/edit" + recipeId;
             }
             else {
-                return "redirect:../recipes/edit" + recipeId;
+                return "redirect:../addsteps/" + recipeId;
             }
     }
 
@@ -175,11 +175,34 @@ public class RecipeController {
             model.addAttribute("recipe", recipe);
             model.addAttribute("ingredientListItems",
                     SearchRepository.getRecipeIngredientListFromRepository(ingredientListItemRepostiory, recipeId));
-
+            if (recipe.getFavorite()) {
+                model.addAttribute("favStatus", "Remove As Favorite");
+            }
+            else {model.addAttribute("favStatus", "Set As Favorite");}
             return "recipes/view";
         } else {
             return "redirect:../";
         }
+    }
+
+    @PostMapping(value = "view/{recipeId}", params = "delete")
+    public String processDeleteRecipe(@PathVariable int recipeId) {
+        Recipe recipe = recipeRepository.findById(recipeId).get();
+        List<IngredientListItem> ingredientItemsToDelete = recipe.getIngredientListItems();
+        for (IngredientListItem item : ingredientItemsToDelete) {
+            ingredientListItemRepostiory.delete(item);
+        }
+        recipeRepository.delete(recipe);
+
+        return  "redirect:../";
+    }
+
+    @PostMapping(value = "view/{recipeId}", params = "setFav")
+    public String processSetFavorite(@PathVariable int recipeId) {
+        Recipe recipe = recipeRepository.findById(recipeId).get();
+        recipe.setFavorite(!recipe.getFavorite());
+        recipeRepository.save(recipe);
+        return "redirect:../view/" + recipeId;
     }
 
 
@@ -236,5 +259,8 @@ public class RecipeController {
         return "redirect:../edit/" + recipeId;
     }
 
-
+    @PostMapping(value = "edit/{recipeId}", params = "addIngredients")
+    public String processAddIngredientToExistingRecipe(@PathVariable int recipeId) {
+        return "redirect:../addingredients/" + recipeId;
+    }
 }
