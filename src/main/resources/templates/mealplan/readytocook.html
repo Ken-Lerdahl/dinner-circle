@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body class="container  body-content">
+<nav th:replace="fragments :: page-header"></nav>
+<div class="d-flex flex-row align-items-center">
+    <div class="p-2">
+        <img th:if="${recipe.favorite}" src="/image/starFav.png">
+        <img th:unless="${recipe.favorite}" src="/image/starNonFav.png">
+    </div>
+    <div class="p-2">
+        <h1 th:text="${recipe.name}">Recipe Name</h1>
+    </div>
+</div>
+
+<div>
+    <ul>
+        <li th:text="${'Recipe Type: ' + recipe.recipeType}"></li>
+        <li th:unless="${recipe.lastMade == null}" th:text="${'Last Made: ' + recipe.lastMade}"></li>
+        <li th:if="${recipe.lastMade == null}">Last Made: NEVER!!</li>
+    </ul>
+</div>
+
+<div>
+    <h2>Ingredient List</h2>
+    <div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Measured Amount</th>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Ingredient</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${ingredientListItems}">
+                    <td th:text="${item.measuredAmountOnListItem}"></td>
+                    <td th:text="${item.unitOnListItem.displayName}"></td>
+                    <td th:text="${item.ingredientOnListItem.name}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div>
+    <h2>Recipe Steps</h2>
+    <ul>
+        <li th:text="${recipe.recipeSteps}"></li>
+    </ul>
+</div>
+<div class="d-flex flex-row align-items-center">
+    <div class="p-2">
+        <form method="post">
+            <input class="btn btn-outline-warning" type="submit" name="setFav"
+                   th:value="${favStatus}">
+        </form>
+    </div>
+    <div class="p-2">
+        <a th:href="@{'/recipes/edit/' + ${recipe.id}}">
+            <button class="btn btn-outline-info">Edit Recipe</button>
+        </a>
+    </div>
+    <div class="p-2">
+        <form method="post">
+            <input class="btn btn-outline-danger" type="submit" name="delete"
+                   value="Delete Recipe" th:onclick="Are you sure you want to delete this recipe?">
+        </form>
+    </div>
+</div>
+</body>
+</html>

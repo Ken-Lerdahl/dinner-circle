@@ -175,10 +175,14 @@ public class RecipeController {
             model.addAttribute("recipe", recipe);
             model.addAttribute("ingredientListItems",
                     SearchRepository.getRecipeIngredientListFromRepository(ingredientListItemRepostiory, recipeId));
-            if (recipe.getFavorite()) {
+            if (recipe.getFavorite() != null && recipe.getFavorite()) {
                 model.addAttribute("favStatus", "Remove As Favorite");
             }
-            else {model.addAttribute("favStatus", "Set As Favorite");}
+            else {
+                recipe.setFavorite(false);
+                recipeRepository.save(recipe);
+                model.addAttribute("favStatus", "Set As Favorite");
+            }
             return "recipes/view";
         } else {
             return "redirect:../";

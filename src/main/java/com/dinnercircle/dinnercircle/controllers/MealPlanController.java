@@ -1,9 +1,7 @@
 package com.dinnercircle.dinnercircle.controllers;
 
-import com.dinnercircle.dinnercircle.models.MealPlan;
-import com.dinnercircle.dinnercircle.models.Recipe;
-import com.dinnercircle.dinnercircle.models.SearchRepository;
-import com.dinnercircle.dinnercircle.models.User;
+import com.dinnercircle.dinnercircle.models.*;
+import com.dinnercircle.dinnercircle.models.data.IngredientListItemRepostiory;
 import com.dinnercircle.dinnercircle.models.data.MealPlanRepository;
 import com.dinnercircle.dinnercircle.models.data.RecipeRepository;
 import com.dinnercircle.dinnercircle.models.data.UserRepository;
@@ -28,6 +26,9 @@ public class MealPlanController {
     @Autowired
     private RecipeRepository recipeRepository;
 
+    @Autowired
+    private IngredientListItemRepostiory ingredientListItemRepostiory;
+
 
     @GetMapping
     public String displayMealplan(Model model) {
@@ -37,30 +38,65 @@ public class MealPlanController {
 
         model.addAttribute("title", "Meal Plan");
         if (SearchRepository.getMealPlanForUser(userRepository) != null) {
+
             MealPlan currentUserMealPlan = SearchRepository.getMealPlanForUser(userRepository);
             model.addAttribute("mealPlan", currentUserMealPlan);
-            if (currentUserMealPlan.getMonday() != 0) {
-                model.addAttribute("mondayMeal", recipeRepository.findById(currentUserMealPlan.getMonday()).get());
+
+            Optional<Recipe> optMondayRecipe = recipeRepository.findById(currentUserMealPlan.getMonday());
+            Optional<Recipe> optTuesdayRecipe = recipeRepository.findById(currentUserMealPlan.getTuesday());
+            Optional<Recipe> optWednesdayRecipe = recipeRepository.findById(currentUserMealPlan.getWednesday());
+            Optional<Recipe> optThursdayRecipe = recipeRepository.findById(currentUserMealPlan.getThursday());
+            Optional<Recipe> optFridayRecipe = recipeRepository.findById(currentUserMealPlan.getFriday());
+            Optional<Recipe> optSaturdayRecipe = recipeRepository.findById(currentUserMealPlan.getSaturday());
+            Optional<Recipe> optSundayRecipe = recipeRepository.findById(currentUserMealPlan.getSunday());
+
+            if (optMondayRecipe.isPresent()) {
+                model.addAttribute("mondayMeal", optMondayRecipe.get());
+                
+            } else {
+                currentUserMealPlan.setMonday(0);
             }
-            if (currentUserMealPlan.getTuesday() != 0) {
-                model.addAttribute("tuesdayMeal", recipeRepository.findById(currentUserMealPlan.getTuesday()).get());
+
+            if (optTuesdayRecipe.isPresent()) {
+                model.addAttribute("tuesdayMeal", optTuesdayRecipe.get());
+            } else {
+                currentUserMealPlan.setTuesday(0);
             }
-            if (currentUserMealPlan.getWednesday() != 0) {
-                model.addAttribute("wednesdayMeal", recipeRepository.findById(currentUserMealPlan.getWednesday()).get());
+
+            if (optWednesdayRecipe.isPresent()) {
+                model.addAttribute("wednesdayMeal", optWednesdayRecipe.get());
+            } else {
+                currentUserMealPlan.setWednesday(0);
             }
-            if (currentUserMealPlan.getThursday() != 0) {
-                model.addAttribute("thursdayMeal", recipeRepository.findById(currentUserMealPlan.getThursday()).get());
+
+            if (optThursdayRecipe.isPresent()) {
+                model.addAttribute("thursdayMeal", optThursdayRecipe.get());
+            } else {
+                currentUserMealPlan.setThursday(0);
             }
-            if (currentUserMealPlan.getFriday() != 0) {
-                model.addAttribute("fridayMeal", recipeRepository.findById(currentUserMealPlan.getFriday()).get());
+
+            if (optFridayRecipe.isPresent()) {
+                model.addAttribute("fridayMeal", optFridayRecipe.get());
+            } else {
+                currentUserMealPlan.setFriday(0);
             }
-            if (currentUserMealPlan.getSaturday() != 0) {
-                model.addAttribute("saturdayMeal", recipeRepository.findById(currentUserMealPlan.getSaturday()).get());
+
+            if (optSaturdayRecipe.isPresent()) {
+                model.addAttribute("saturdayMeal", optSaturdayRecipe.get());
+            } else {
+                currentUserMealPlan.setSaturday(0);
             }
-            if (currentUserMealPlan.getSunday() != 0) {
-                model.addAttribute("sundayMeal", recipeRepository.findById(currentUserMealPlan.getSunday()).get());
+
+            if (optSundayRecipe.isPresent()) {
+                model.addAttribute("sundayMeal", optSundayRecipe.get());
+            } else {
+                currentUserMealPlan.setSunday(0);
             }
+            mealPlanRepository.save(currentUserMealPlan);
+
+
         }
+
         else {
             MealPlan newUserMealPlan = new MealPlan();
             SearchRepository.getCurrentUser(userRepository).setMealPlan(newUserMealPlan);
@@ -80,17 +116,29 @@ public class MealPlanController {
         return "mealplan/index";
     }
 
-    @PostMapping(value = "", params = "make")
-    public String processMealPlanMake(Model model, @RequestParam int mealId) {
+    @GetMapping("readytocook/{recipeId}")
+    public String displayReadyToCook(Model model, @PathVariable int recipeId) {
+        Optional<Recipe> optRecipe = recipeRepository.findById(recipeId);
 
-        Optional<Recipe> optRecipe = recipeRepository.findById(mealId);
 
-        Recipe recipe = (Recipe) optRecipe.get();
-        recipe.setLastMade(LocalDate.now());
-        recipeRepository.save(recipe);
+            Recipe recipe = (Recipe) optRecipe.get();
 
-        return "redirect:../recipes/view/" + recipe.getId();
+            model.addAttribute("recipe", recipe);
+            model.addAttribute("ingredientListItems",
+                    SearchRepository.getRecipeIngredientListFromRepository(ingredientListItemRepostiory, recipeId));
+            recipe.setLastMade(LocalDate.now());
+            recipeRepository.save(recipe);
+            if (recipe.getFavorite() != null && recipe.getFavorite()) {
+                model.addAttribute("favStatus", "Remove As Favorite");
+            }
+            else {
+                recipe.setFavorite(false);
+                recipeRepository.save(recipe);
+                model.addAttribute("favStatus", "Set As Favorite");
+            }
+        return "mealplan/readytocook";
     }
+
 
     @GetMapping("selectmeal/{mealDay}")
     public String displaySelectMeal(Model model, @PathVariable String mealDay) {

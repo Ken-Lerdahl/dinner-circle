@@ -23,10 +23,9 @@
             <h3 th:text="${mondayMeal.name}"></h3>
         </div>
         <div class="p-2">
-            <form method="post">
-                <input type="hidden" name="mealId" th:value="${mondayMeal.id}"/>
-                <button class="btn btn-outline-primary" type="submit" name="make">Ready to Cook</button>
-            </form>
+            <a th:href="@{'/mealplan/readytocook/' + ${mondayMeal.id}}">
+                <button class="btn btn-outline-primary">Ready to Cook</button>
+            </a>
         </div>
         <div class="p-2">
             <a th:href="@{'/mealplan/selectmeal/monday'}">
@@ -52,13 +51,152 @@
             <h3 th:text="${tuesdayMeal.name}"></h3>
         </div>
         <div class="p-2">
-            <form method="post">
-                <input type="hidden" name="mealId" th:value="${tuesdayMeal.id}"/>
-                <button class="btn btn-outline-primary" type="submit" name="make">Ready to Cook</button>
-            </form>
+            <a th:href="@{'/mealplan/readytocook/' + ${tuesdayMeal.id}}">
+                <button class="btn btn-outline-primary">Ready to Cook</button>
+            </a>
         </div>
         <div class="p-2">
             <a th:href="@{'/mealplan/selectmeal/tuesday'}">
+                <button class="btn btn-outline-secondary">Change Meal</button>
+            </a>
+        </div>
+    </th:block>
+</div>
+
+<div class="d-flex flex-row align-items-center">
+    <th:block th:if="${mealPlan.wednesday == 0}">
+        <div class="p-2">
+            <a th:href="@{'/mealplan/selectmeal/wednesday'}">
+                <img  src="/image/wednesday-not-selected.png">
+            </a>
+        </div>
+    </th:block>
+    <th:block th:if="${mealPlan.wednesday != 0}">
+        <div class="p-2">
+            <img  src="/image/wednesday-selected.png">
+        </div>
+        <div class="p-2">
+            <h3 th:text="${wednesdayMeal.name}"></h3>
+        </div>
+        <div class="p-2">
+            <a th:href="@{'/mealplan/readytocook/' + ${wednesdayMeal.id}}">
+                <button class="btn btn-outline-primary">Ready to Cook</button>
+            </a>
+        </div>
+        <div class="p-2">
+            <a th:href="@{'/mealplan/selectmeal/wednesday'}">
+                <button class="btn btn-outline-secondary">Change Meal</button>
+            </a>
+        </div>
+    </th:block>
+</div>
+
+<div class="d-flex flex-row align-items-center">
+    <th:block th:if="${mealPlan.thursday == 0}">
+        <div class="p-2">
+            <a th:href="@{'/mealplan/selectmeal/thursday'}">
+                <img  src="/image/thursday-not-selected.png">
+            </a>
+        </div>
+    </th:block>
+    <th:block th:if="${mealPlan.thursday != 0}">
+        <div class="p-2">
+            <img  src="/image/thursday-selected.png">
+        </div>
+        <div class="p-2">
+            <h3 th:text="${thursdayMeal.name}"></h3>
+        </div>
+        <div class="p-2">
+            <a th:href="@{'/mealplan/readytocook/' + ${thursdayMeal.id}}">
+                <button class="btn btn-outline-primary">Ready to Cook</button>
+            </a>
+        </div>
+        <div class="p-2">
+            <a th:href="@{'/mealplan/selectmeal/thursday'}">
+                <button class="btn btn-outline-secondary">Change Meal</button>
+            </a>
+        </div>
+    </th:block>
+</div>
+
+<div class="d-flex flex-row align-items-center">
+    <th:block th:if="${mealPlan.friday == 0}">
+        <div class="p-2">
+            <a th:href="@{'/mealplan/selectmeal/friday'}">
+                <img  src="/image/friday-not-selected.png">
+            </a>
+        </div>
+    </th:block>
+    <th:block th:if="${mealPlan.friday != 0}">
+        <div class="p-2">
+            <img  src="/image/friday-selected.png">
+        </div>
+        <div class="p-2">
+            <h3 th:text="${fridayMeal.name}"></h3>
+        </div>
+        <div class="p-2">
+            <a th:href="@{'/mealplan/readytocook/' + ${fridayMeal.id}}">
+                <button class="btn btn-outline-primary">Ready to Cook</button>
+            </a>
+        </div>
+        <div class="p-2">
+            <a th:href="@{'/mealplan/selectmeal/friday'}">
+                <button class="btn btn-outline-secondary">Change Meal</button>
+            </a>
+        </div>
+    </th:block>
+</div>
+
+<div class="d-flex flex-row align-items-center">
+    <th:block th:if="${mealPlan.saturday == 0}">
+        <div class="p-2">
+            <a th:href="@{'/mealplan/selectmeal/saturday'}">
+                <img  src="/image/saturday-not-selected.png">
+            </a>
+        </div>
+    </th:block>
+    <th:block th:if="${mealPlan.saturday != 0}">
+        <div class="p-2">
+            <img  src="/image/saturday-selected.png">
+        </div>
+        <div class="p-2">
+            <h3 th:text="${saturdayMeal.name}"></h3>
+        </div>
+        <div class="p-2">
+            <a th:href="@{'/mealplan/readytocook/' + ${saturdayMeal.id}}">
+                <button class="btn btn-outline-primary">Ready to Cook</button>
+            </a>
+        </div>
+        <div class="p-2">
+            <a th:href="@{'/mealplan/selectmeal/saturday'}">
+                <button class="btn btn-outline-secondary">Change Meal</button>
+            </a>
+        </div>
+    </th:block>
+</div>
+
+<div class="d-flex flex-row align-items-center">
+    <th:block th:if="${mealPlan.sunday == 0}">
+        <div class="p-2">
+            <a th:href="@{'/mealplan/selectmeal/sunday'}">
+                <img  src="/image/sunday-not-selected.png">
+            </a>
+        </div>
+    </th:block>
+    <th:block th:if="${mealPlan.sunday != 0}">
+        <div class="p-2">
+            <img  src="/image/sunday-selected.png">
+        </div>
+        <div class="p-2">
+            <h3 th:text="${sundayMeal.name}"></h3>
+        </div>
+        <div class="p-2">
+            <a th:href="@{'/mealplan/readytocook/' + ${sundayMeal.id}}">
+                <button class="btn btn-outline-primary">Ready to Cook</button>
+            </a>
+        </div>
+        <div class="p-2">
+            <a th:href="@{'/mealplan/selectmeal/sunday'}">
                 <button class="btn btn-outline-secondary">Change Meal</button>
             </a>
         </div>
