@@ -12,6 +12,23 @@
 </head>
 <body>
 
+<div th:fragment="page-header-not-logged-in" class ="navbar navbar-expand navbar-light bg-light">
+    <div class="container">
+        <div class="navbar-header">
+            <a th:href="@{/home}" class="navbar-brand">
+                <img src="/image/dinner-circle-logo.png"
+                     width="60" height="60" alt="Dinner Circle Logo">
+            </a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <div class="nav navbar-nav">
+                <a class="nav-item nav-link" th:href="@{/login}">Login</a>
+                <a class="nav-item nav-link" th:href="@{/register}">Create an Account</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div th:fragment="page-header" class ="navbar navbar-expand navbar-light bg-light">
     <div class="container">
         <div class="navbar-header">
@@ -29,7 +46,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 </body>

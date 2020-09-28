@@ -15,7 +15,10 @@ public class HomeController {
 
     @RequestMapping("")
     public String displayIndex() {
-        return "/index";
+        return "/welcome";
     }
+
+    @RequestMapping("welcome")
+    public String displayWelcome() { return "/welcome";}
 
 }

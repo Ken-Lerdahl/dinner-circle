@@ -52,7 +52,7 @@ public class MealPlanController {
 
             if (optMondayRecipe.isPresent()) {
                 model.addAttribute("mondayMeal", optMondayRecipe.get());
-                
+
             } else {
                 currentUserMealPlan.setMonday(0);
             }
