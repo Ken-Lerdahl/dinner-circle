@@ -6,22 +6,24 @@
 
 <header th:replace="fragments :: page-header"></header>
 
-<h1 style="padding-top:60px;">Welcome to Dinner Circle!</h1>
+<h1 style="padding-top:60px;" th:text="${welcome}">Welcome to Dinner Circle!</h1>
 
 <div style="padding-top:40px;">
-    <a class="btn btn-primary btn-lg" th:href="@{/login}" role="button">Existing User</a>
-    <a class="btn btn-primary btn-lg" th:href="@{/register}" role="button">New User</a>
+    <a class="btn btn-outline-danger btn-lg" th:href="@{/recipes}" role="button">Go To Your Recipes</a>
 </div>
-<h2>What is Dinner Circle?</h2>
-<div>
-    <p>Bla Bla Bla Bla Bla</p>
-    <h3>Meal Planning Made Better</h3>
-    <p>Screen shot and text of meal plan here</p>
-    <h3>Go Shopping with Dinner Circle</h3>
-    <p>Screen Shot and text of shopping list here</p>
-    <h3>Cook with Friends</h3>
-    <p>Screen shot and text of social goes here</p>
+
+<div style="padding-top:40px;">
+    <a class="btn btn-outline-success btn-lg" th:href="@{/mealplan}" role="button">Go To Your Meal Plan</a>
 </div>
+
+<div style="padding-top:40px;">
+    <a class="btn btn-outline-info btn-lg" th:href="@{/home}" role="button">Go To Your Shopping List</a>
+</div>
+
+<div style="padding-top:40px;">
+    <a class="btn btn-outline-primary btn-lg" th:href="@{/home}" role="button">Be Social</a>
+</div>
+
 
 </body>
 </html>

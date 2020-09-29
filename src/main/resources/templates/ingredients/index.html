@@ -10,12 +10,13 @@
 
 <div class="container body-content">
     <h2>Ingredients</h2>
+    <a th:if="${ingredients.size()} >= 20" th:href="@{'/ingredients/add'}" class="btn btn-outline-primary" role="button">Add Ingredient</a>
     <ul>
         <li th:each="ingredient : ${ingredients}">
             <p th:text="${ingredient.name}"></p>
         </li>
     </ul>
-    <a th:href="@{'/ingredients/add'}">Add Ingredient</a>
+    <a th:href="@{'/ingredients/add'}" class="btn btn-outline-primary" role="button">Add Ingredient</a>
 
 </div>
 

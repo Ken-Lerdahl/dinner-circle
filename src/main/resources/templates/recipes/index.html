@@ -7,12 +7,12 @@
 <div th:replace="fragments :: page-header"></div>
 
 <div class="container body-content">
-    <h2>All Recipes</h2>
+    <h2 style="padding-top:40px;">All Recipes</h2>
     <div>
         <p th:unless="${recipes} and ${recipes.size()}">Add some recipes!</p>
     </div>
     <div>
-        <a th:href="@{'/recipes/add'}">
+        <a th:if="${recipes.size() >= 20}" th:href="@{'/recipes/add'}">
             <button class="btn btn-outline-primary">Add A New Recipe</button>
         </a>
     </div>
