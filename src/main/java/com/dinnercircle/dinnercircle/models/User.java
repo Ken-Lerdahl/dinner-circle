@@ -35,6 +35,9 @@ public class User  extends AbstractEntity{
     @OneToOne(cascade = CascadeType.ALL)
     private MealPlan mealPlan;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private ShoppingList shoppingList;
+
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public User() {}
@@ -79,6 +82,10 @@ public class User  extends AbstractEntity{
     public void setMealPlan(MealPlan mealPlan) {
         this.mealPlan = mealPlan;
     }
+
+    public ShoppingList getShoppingList() {return shoppingList;}
+
+    public void setShoppingList(ShoppingList shoppingList) {this.shoppingList = shoppingList;}
 
 
 }

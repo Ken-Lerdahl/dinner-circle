@@ -16,8 +16,6 @@ public class Recipe extends AbstractEntity{
     @OneToMany(mappedBy = "recipe")
     private List<IngredientListItem> ingredientListItems= new ArrayList<>();
 
-//    @ManyToOne
-//    private MealPlan mealPlan;
 
     @NotBlank(message = "Name of recipe is required")
     @Size(min = 5, max = 50, message = "Name of recipe must be between 5 and 50 characters")
